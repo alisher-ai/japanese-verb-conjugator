@@ -19,7 +19,7 @@ async function fetchConjugations() {
     try {
         const response = await fetch(proxyUrl, {
             headers: {
-                'Origin': 'https://your-website.github.io' // replace with your GitHub Pages URL
+                'Origin': 'https://<your-username>.github.io/<your-repo-name>' // replace with your GitHub Pages URL
             }
         });
         console.log(`Response status: ${response.status}`);
