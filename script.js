@@ -10,13 +10,22 @@ async function fetchConjugations() {
         return;
     }
 
+    const encodedVerb = encodeURIComponent(verb);
+    const apiUrl = `https://jisho.org/api/v1/search/words?keyword=${encodedVerb}`;
+
+    console.log(`Fetching data from: ${apiUrl}`);
+
     try {
-        const response = await fetch(`https://jisho.org/api/v1/search/words?keyword=${encodeURIComponent(verb)}`);
+        const response = await fetch(apiUrl);
+        console.log(`Response status: ${response.status}`);
+
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const data = await response.json();
+        console.log('Data received:', data);
+
         if (data.data.length === 0) {
             resultDiv.innerHTML = '<p>No results found.</p>';
             return;
