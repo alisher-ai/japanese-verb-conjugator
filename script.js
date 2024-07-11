@@ -13,6 +13,7 @@ async function fetchConjugations() {
     const encodedVerb = encodeURIComponent(verb);
     const apiUrl = `https://jisho.org/api/v1/search/words?keyword=${encodedVerb}`;
 
+    console.log(`Encoded verb: ${encodedVerb}`);
     console.log(`Fetching data from: ${apiUrl}`);
 
     try {
