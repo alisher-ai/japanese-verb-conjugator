@@ -12,19 +12,20 @@ async function fetchConjugations() {
 
     const encodedVerb = encodeURIComponent(verb);
     const apiUrl = `https://jisho.org/api/v1/search/words?keyword=${encodedVerb}`;
+    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`;
 
-    console.log(`Encoded verb: ${encodedVerb}`);
-    console.log(`Fetching data from: ${apiUrl}`);
+    console.log(`Fetching data from: ${proxyUrl}`);
 
     try {
-        const response = await fetch(apiUrl);
+        const response = await fetch(proxyUrl);
         console.log(`Response status: ${response.status}`);
 
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        const data = await response.json();
+        const text = await response.json();
+        const data = JSON.parse(text.contents);
         console.log('Data received:', data);
 
         if (data.data.length === 0) {
