@@ -12,20 +12,23 @@ async function fetchConjugations() {
 
     const encodedVerb = encodeURIComponent(verb);
     const apiUrl = `https://jisho.org/api/v1/search/words?keyword=${encodedVerb}`;
-    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`;
+    const proxyUrl = `https://cors-anywhere.herokuapp.com/${apiUrl}`;
 
     console.log(`Fetching data from: ${proxyUrl}`);
 
     try {
-        const response = await fetch(proxyUrl);
+        const response = await fetch(proxyUrl, {
+            headers: {
+                'Origin': 'https://your-website.github.io' // replace with your GitHub Pages URL
+            }
+        });
         console.log(`Response status: ${response.status}`);
 
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        const text = await response.json();
-        const data = JSON.parse(text.contents);
+        const data = await response.json();
         console.log('Data received:', data);
 
         if (data.data.length === 0) {
